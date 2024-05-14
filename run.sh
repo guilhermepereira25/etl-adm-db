@@ -1,13 +1,13 @@
 #!/bin/bash
 
 function configure(){
-    mkdir -m 777 -p $(pwd)/data/postgresql/pgdata
-    mkdir -m 777 -p $(pwd)/data/postgresql/sshkeys
+    mkdir -m 755 -p $(pwd)/data/postgresql/pgdata
+    mkdir -m 755 -p $(pwd)/data/postgresql/sshkeys
 
-    mkdir -m 777 -p $(pwd)/data/pgbarman/sshkeys
-    mkdir -m 777 -p $(pwd)/data/pgbarman/log
-    mkdir -m 777 -p $(pwd)/data/pgbarman/backupcfg
-    mkdir -m 777 -p $(pwd)/data/pgbarman/backups
+    mkdir -m 755 -p $(pwd)/data/pgbarman/sshkeys
+    mkdir -m 755 -p $(pwd)/data/pgbarman/log
+    mkdir -m 755 -p $(pwd)/data/pgbarman/backupcfg
+    mkdir -m 755 -p $(pwd)/data/pgbarman/backups
 
     ssh-keygen -b 4096 -t rsa -N '' -f $(pwd)/data/postgresql/sshkeys/id_rsa
     ssh-keygen -f ~/.ssh/id_rsa -y >> $(pwd)/data/postgresql/sshkeys/authorized_keys
@@ -18,8 +18,8 @@ function configure(){
     ssh-keygen -f $(pwd)/data/pgbarman/sshkeys/id_rsa -y >> $(pwd)/data/postgresql/sshkeys/authorized_keys
     ssh-keygen -f $(pwd)/data/postgresql/sshkeys/id_rsa -y >> $(pwd)/data/pgbarman/sshkeys/authorized_keys
 
-    chmod -R 777 $(pwd)/data/postgresql/sshkeys/*
-    chmod -R 777 $(pwd)/data/pgbarman/sshkeys/*
+    chmod -R 755 $(pwd)/data/postgresql/sshkeys/*
+    chmod -R 755 $(pwd)/data/pgbarman/sshkeys/*
 
     cp Barman/postgres-source-db.conf $(pwd)/data/pgbarman/backupcfg/.
 }
