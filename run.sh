@@ -25,23 +25,23 @@ function configure(){
 }
 
 function build(){
-    docker-compose --compatibility --project-name "postgresql-barman" build --memory 1g --no-cache;
+    docker compose --compatibility --project-name "postgresql-barman" build --memory 1g --no-cache;
 }
 
 function up(){
-    docker-compose --compatibility --project-name "postgresql-barman" up -d;
+    docker compose --compatibility --project-name "postgresql-barman" up -d;
 }
 
 function stop(){
-    docker-compose --compatibility --project-name "postgresql-barman" stop;
+    docker compose --compatibility --project-name "postgresql-barman" stop;
 }
 
 function drop(){
-    docker-compose --compatibility --project-name "postgresql-barman" down;
+    docker compose --compatibility --project-name "postgresql-barman" down;
 }
 
 function drop_hard(){
-    docker-compose --compatibility --project-name "postgresql-barman" down --remove-orphans --volumes --rmi 'all' && \
+    docker compose --compatibility --project-name "postgresql-barman" down --remove-orphans --volumes --rmi 'all' && \
     [ -d "./data" ] && sudo rm -rf ./data;
     docker builder prune -f;
 }
