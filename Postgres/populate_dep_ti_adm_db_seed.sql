@@ -83,6 +83,14 @@ VALUES
   ('Equipe de Desenvolvimento', NOW()),
   ('Equipe de Infraestrutura', NOW());
 
+  -- Populando tabela projeto
+INSERT INTO projeto (nome, situacao_id, descricao, created_at)
+VALUES 
+  ('Projeto A', (SELECT id FROM situacao WHERE valor = 'Em Andamento'), 'Descrição do Projeto A', NOW()),
+  ('Projeto B', (SELECT id FROM situacao WHERE valor = 'Em Andamento'), 'Descrição do Projeto B', NOW()),
+  ('Projeto C', (SELECT id FROM situacao WHERE valor = 'Em Andamento'), 'Descrição do Projeto C', NOW());
+
+
 -- Populando tabela equipe_funcionario
 INSERT INTO equipe_funcionario (equipe_id, funcionario_id)
 VALUES 
