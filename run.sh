@@ -51,7 +51,7 @@ function populate(){
 }
 
 function seed(){
-    docker exec postgres-source-db psql -U dbadmin -d 'db' -p 5432 -c "$(cat ./Postgres/Postgres/populate_dep_ti_adm_db_seed.sql)";
+    docker exec postgres-source-db psql -U dbadmin -d 'db' -p 5432 -c "$(cat ./Postgres/populate_dep_ti_adm_db_seed.sql)";
 }
 
 $1
