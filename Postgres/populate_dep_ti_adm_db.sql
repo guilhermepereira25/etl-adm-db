@@ -40,7 +40,7 @@ CREATE TABLE chamado (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   atendente varchar(100),
   requerente varchar(100),
-  tipo_chamado_id integer,
+  tipo_chamado_id uuid,
   situacao_id uuid,
   created_at timestamp
 );
@@ -68,12 +68,16 @@ CREATE TABLE equipe (
 CREATE TABLE equipe_funcionario (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   equipe_id uuid,
-  funcionario_id uuid
+  funcionario_id uuid,
+  CONSTRAINT fk_equipe FOREIGN KEY (equipe_id) REFERENCES equipe (id),
+  CONSTRAINT fk_funcionario FOREIGN KEY (funcionario_id) REFERENCES funcionario (id)                                                                            
 );
+
+CREATE TYPE situacao_enum AS ENUM ('Em Andamento','Concluído','Em Atraso','Aberto','Resolvido','Ativo','Devolvido','Encerrado');                                              
 
 CREATE TABLE situacao (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  valor enum(Em Andamento,Concluído,Em Atraso,Aberto,Resolvido,Ativo,Devolvido,Encerrado) NOT NULL,
+  valor situacao_enum,
   created_at timestamp
 );
 
@@ -88,12 +92,16 @@ CREATE TABLE projeto (
 CREATE TABLE equipe_projeto (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   projeto_id uuid,
-  equipe_id uuid
+  equipe_id uuid,
+  CONSTRAINT fk_projeto FOREIGN KEY (projeto_id) REFERENCES projeto (id),
+  CONSTRAINT fk_equipe FOREIGN KEY (equipe_id) REFERENCES equipe (id)
 );
+
+CREATE TYPE tipo_enum AS ENUM ('software','servidor','computador'); 
 
 CREATE TABLE ativo_ti (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  tipo enum(software,servidor,computador) DEFAULT 'computador',
+  tipo tipo_enum,
   descricao varchar(255),
   situacao_id uuid,
   data_compra date,
@@ -102,10 +110,12 @@ CREATE TABLE ativo_ti (
   created_at timestamp
 );
 
+CREATE TYPE severidade_enum AS ENUM ('Baixa','Média','Alta');
+
 CREATE TABLE incidente (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   descricao varchar(255),
-  severidade enum,
+  severidade severidade_enum,
   situacao_id uuid,
   funcionario_id uuid,
   created_at timestamp,
@@ -157,18 +167,10 @@ ALTER TABLE treinamento_funcionario ADD FOREIGN KEY (treinamento_id) REFERENCES 
 
 ALTER TABLE treinamento_funcionario ADD FOREIGN KEY (funcionario_id) REFERENCES funcionario (id);
 
-ALTER TABLE equipe_area ADD FOREIGN KEY (equipe_id) REFERENCES equipe (id);
+ALTER TABLE equipe_area ADD FOREIGN KEY (equipe_id) REFERENCES equipe(id);
 
-ALTER TABLE equipe_area ADD FOREIGN KEY (area_id) REFERENCES area (id);
+ALTER TABLE equipe_area ADD FOREIGN KEY (area_id) REFERENCES area(id);
 
-ALTER TABLE equipe ADD FOREIGN KEY (id) REFERENCES equipe_projeto (equipe_id);
+ALTER TABLE funcionario ADD FOREIGN KEY (id_funcao) REFERENCES funcao(id);
 
-ALTER TABLE projeto ADD FOREIGN KEY (id) REFERENCES equipe_projeto (projeto_id);
-
-ALTER TABLE equipe ADD FOREIGN KEY (id) REFERENCES equipe_funcionario (equipe_id);
-
-ALTER TABLE funcionario ADD FOREIGN KEY (id) REFERENCES equipe_funcionario (funcionario_id);
-
-ALTER TABLE funcionario ADD FOREIGN KEY (id_funcao) REFERENCES funcao (id);
-
-ALTER TABLE funcionario ADD FOREIGN KEY (id_nivel) REFERENCES nivel (id);
+ALTER TABLE funcionario ADD FOREIGN KEY (id_nivel) REFERENCES nivel(id);
