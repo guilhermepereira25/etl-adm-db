@@ -1,3 +1,4 @@
+TRUNCATE TABLE log_chamado CASCADE;
 
 alter table log_chamado rename column encaminhador to encaminhador_id;
 
