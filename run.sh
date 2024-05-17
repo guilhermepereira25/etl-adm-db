@@ -54,4 +54,14 @@ function seed(){
     docker exec postgres-source-db psql -U dbadmin -d 'db' -p 5432 -c "$(cat ./Postgres/populate_dep_ti_adm_db_seed.sql)";
 }
 
+function update(){
+    local migration_file=$(ls -t ./migration | head -n 1)
+    if [ -f "./migration/$migration_file" ]; then
+        echo "Running migration file: $migration_file";
+        docker exec postgres-source-db psql -U dbadmin -d 'db' -p 5432 -c "$(cat ./migration/$migration_file)";
+    else
+        echo "Migration file not found: $migration_file";
+    fi
+}
+
 $1
