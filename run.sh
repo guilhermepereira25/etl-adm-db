@@ -64,4 +64,9 @@ function update(){
     fi
 }
 
+function dump(){
+    docker exec postgres-source-db pg_dump -U dbadmin -d 'db' -p 5432 -f /tmp/db.sql;
+    docker cp postgres-source-db:/tmp/db.sql ./data/pgbarman/backups/db.sql;
+}
+
 $1
