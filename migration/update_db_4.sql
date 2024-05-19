@@ -6,7 +6,7 @@ ALTER TABLE area
 ALTER COLUMN descricao SET NOT NULL;
 
 ALTER TABLE area
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE area ADD CONSTRAINT unique_name_area UNIQUE (descricao);
 
@@ -24,8 +24,8 @@ ALTER COLUMN situacao_id  SET NOT NULL;
 ALTER TABLE ativo_ti
 ALTER COLUMN data_compra  SET NOT NULL;
 
-ALTER TABLE ativo_ti
-ALTER COLUMN data_fim_vida_util  SET NOT NULL;
+-- ALTER TABLE ativo_ti
+-- ALTER COLUMN data_fim_vida_util SET NOT NULL;
 
 ALTER TABLE ativo_ti
 ALTER COLUMN funcionario_id  SET NOT NULL;
@@ -34,8 +34,7 @@ ALTER TABLE ativo_ti
 ALTER COLUMN created_at  SET NOT NULL;
 
 ALTER TABLE ativo_ti
-ALTER COLUMN deleted  SET NOT NULL;
-
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações cargo-------------
 
@@ -46,7 +45,7 @@ ALTER TABLE cargo
 ALTER COLUMN descricao SET NOT NULL;
 
 ALTER TABLE cargo 
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE cargo ADD CONSTRAINT unique_name_cargo UNIQUE (descricao);
 
@@ -71,7 +70,7 @@ ALTER TABLE chamado
 ALTER COLUMN created_at SET NOT NULL;
 
 ALTER TABLE chamado  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações equipe-------------
 
@@ -85,7 +84,7 @@ ALTER TABLE equipe
 ALTER COLUMN created_at SET NOT NULL;
 
 ALTER TABLE equipe  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE equipe ADD CONSTRAINT unique_name_equipe UNIQUE (nome);
 
@@ -102,7 +101,7 @@ ALTER TABLE equipe_area
 ALTER COLUMN area_id SET NOT NULL;
 
 ALTER TABLE equipe_area 
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações equipe_funcionario-------------
 
@@ -116,7 +115,7 @@ ALTER TABLE equipe_funcionario
 ALTER COLUMN funcionario_id SET NOT NULL;
 
 ALTER TABLE equipe_funcionario 
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 
 -------alterações equipe_projeto-------------
@@ -131,7 +130,7 @@ ALTER TABLE equipe_projeto
 ALTER COLUMN projeto_id SET NOT NULL;
 
 ALTER TABLE equipe_projeto 
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações funcao-------------
 
@@ -148,7 +147,7 @@ ALTER TABLE funcao
 ALTER COLUMN updated_at SET NOT NULL;
 
 ALTER TABLE funcao  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE funcao ADD CONSTRAINT unique_name_funcao UNIQUE (descricao);
 
@@ -171,7 +170,7 @@ ALTER TABLE funcionario
 ALTER COLUMN created_at SET NOT NULL;
 
 ALTER TABLE funcionario  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 
 -------alterações funcionario_sistema-------------
@@ -189,7 +188,7 @@ ALTER TABLE funcionario_sistema
 ALTER COLUMN sistema_id SET NOT NULL;
 
 ALTER TABLE funcionario_sistema 
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações incidente-------------
 
@@ -215,7 +214,7 @@ ALTER TABLE incidente
 ALTER COLUMN updated_at SET NOT NULL;
 
 ALTER TABLE incidente 
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações log_chamado-------------
 
@@ -232,7 +231,7 @@ ALTER TABLE log_chamado
 ALTER COLUMN created_at SET NOT NULL;
 
 ALTER TABLE log_chamado 
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações nivel-------------
 
@@ -243,7 +242,7 @@ ALTER TABLE nivel
 ALTER COLUMN descricao SET NOT NULL;
 
 ALTER TABLE nivel  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE nivel ADD CONSTRAINT unique_name_nivel UNIQUE (descricao);
 
@@ -257,7 +256,7 @@ ALTER TABLE perfil
 ALTER COLUMN nome SET NOT NULL;
 
 ALTER TABLE perfil  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE perfil  ADD CONSTRAINT unique_name_perfil UNIQUE (nome);
 
@@ -273,7 +272,7 @@ ALTER TABLE perfil_permissao
 ALTER COLUMN permissao_id SET NOT NULL;
 
 ALTER TABLE perfil_permissao  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações permissao-------------
 
@@ -284,7 +283,7 @@ ALTER TABLE permissao
 ALTER COLUMN nome SET NOT NULL;
 
 ALTER TABLE permissao  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE permissao  ADD CONSTRAINT unique_name_permissao UNIQUE (nome);
 
@@ -303,7 +302,7 @@ ALTER TABLE projeto
 ALTER COLUMN created_at SET NOT NULL;
 
 ALTER TABLE projeto  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE projeto  ADD CONSTRAINT unique_name_projeto UNIQUE (nome);
 
@@ -319,7 +318,7 @@ ALTER TABLE rel_chamado_log_chamado
 ALTER COLUMN chamado_id SET NOT NULL;
 
 ALTER TABLE rel_chamado_log_chamado  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações sistema-------------
 
@@ -330,7 +329,7 @@ ALTER TABLE sistema
 ALTER COLUMN nome SET NOT NULL;
 
 ALTER TABLE sistema  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE sistema  ADD CONSTRAINT unique_name_sistema UNIQUE (nome);
 
@@ -346,7 +345,7 @@ ALTER TABLE situacao
 ALTER COLUMN created_at SET NOT NULL;
 
 ALTER TABLE situacao  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações tipo_chamado-------------
 
@@ -357,7 +356,7 @@ ALTER TABLE tipo_chamado
 ALTER COLUMN descricao SET NOT NULL;
 
 ALTER TABLE tipo_chamado  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 ALTER TABLE tipo_chamado  ADD CONSTRAINT unique_name_tipo_chamado UNIQUE (descricao);
 
@@ -373,7 +372,7 @@ ALTER TABLE treinamento_funcionario
 ALTER COLUMN funcionario_id SET NOT NULL;
 
 ALTER TABLE treinamento_funcionario  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
 
 -------alterações treinamento_ti-------------
 
@@ -387,4 +386,4 @@ ALTER TABLE treinamento_ti
 ALTER COLUMN created_at SET NOT NULL;
 
 ALTER TABLE treinamento_ti  
-ALTER COLUMN deleted SET NOT NULL;
+ALTER COLUMN deleted SET DEFAULT false;
