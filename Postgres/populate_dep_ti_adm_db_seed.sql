@@ -54,6 +54,9 @@ VALUES
   ('João Silva', (SELECT id FROM funcao WHERE descricao = 'Analista de Suporte'), (SELECT id FROM nivel WHERE descricao = 'Junior'), (SELECT id FROM cargo WHERE descricao = 'Técnico de Suporte'), NOW()),
   ('Maria Souza', (SELECT id FROM funcao WHERE descricao = 'Desenvolvedor'), (SELECT id FROM nivel WHERE descricao = 'Pleno'), (SELECT id FROM cargo WHERE descricao = 'Engenheiro de Software'), NOW()),
   ('José Santos', (SELECT id FROM funcao WHERE descricao = 'Gerente de Projetos'), (SELECT id FROM nivel WHERE descricao = 'Senior'), (SELECT id FROM cargo WHERE descricao = 'Diretor de Tecnologia'), NOW());
+  ('Ana Oliveira', (SELECT id FROM funcao WHERE descricao = 'Analista de Sistemas'), (SELECT id FROM nivel WHERE descricao = 'Junior'), (SELECT id FROM cargo WHERE descricao = 'Técnico de Suporte'), NOW()),
+  ('Pedro Rocha', (SELECT id FROM funcao WHERE descricao = 'DBA'), (SELECT id FROM nivel WHERE descricao = 'Pleno'), (SELECT id FROM cargo WHERE descricao = 'Engenheiro de Software'), NOW()),
+  ('Mariana Costa', (SELECT id FROM funcao WHERE descricao = 'Analista de Suporte'), (SELECT id FROM nivel WHERE descricao = 'Senior'), (SELECT id FROM cargo WHERE descricao = 'Diretor de Tecnologia'), NOW());
 
 -- Populando tabela chamado
 INSERT INTO chamado (atendente, requerente, tipo_chamado_id, situacao_id, created_at)
@@ -63,11 +66,11 @@ VALUES
   ('Mariana Costa', 'Paulo Santos', (SELECT id FROM tipo_chamado WHERE descricao = 'Requisição'), (SELECT id FROM situacao WHERE valor = 'Em Atraso'), NOW());
 
 -- Populando tabela log_chamado
-INSERT INTO log_chamado (encaminhador, receptor, area_id, created_at)
+INSERT INTO log_chamado (encaminhador_id, receptor_id, area_id, created_at)
 VALUES 
-  ('Ana Oliveira', 'Pedro Rocha', (SELECT id FROM area WHERE descricao = 'Suporte Técnico'), NOW()),
-  ('Mariana Costa', 'João Silva', (SELECT id FROM area WHERE descricao = 'Desenvolvimento'), NOW()),
-  ('Pedro Rocha', 'Mariana Costa', (SELECT id FROM area WHERE descricao = 'Infraestrutura'), NOW());
+  ((SELECT id FROM funcionario LIMIT 1), (SELECT id FROM funcionario LIMIT 1 OFFSET 2), (SELECT id FROM area WHERE descricao = 'Suporte Técnico'), NOW()),
+  ((SELECT id FROM funcionario LIMIT 1 OFFSET 1), (SELECT id FROM funcionario LIMIT 1), (SELECT id FROM area WHERE descricao = 'Desenvolvimento'), NOW()),
+  ((SELECT id FROM funcionario LIMIT 1 OFFSET 2), (SELECT id FROM funcionario LIMIT 1 OFFSET 3), (SELECT id FROM area WHERE descricao = 'Infraestrutura'), NOW());
 
 -- Populando tabela rel_chamado_log_chamado
 INSERT INTO rel_chamado_log_chamado (log_chamado_id, chamado_id)
