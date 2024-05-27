@@ -9,6 +9,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: postgres-source-db
+    tty: true
     environment:
       PGDATA: "/var/lib/postgresql/data/pgdata"
       PGPORT: "5432"
@@ -45,8 +46,6 @@ services:
         max-file: "5"
     networks:
       - spectre-network-test
-    restart: always
-
 
   pg-barman:
     hostname: pg-barman
