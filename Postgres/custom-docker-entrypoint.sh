@@ -18,3 +18,4 @@ function customize {
 
 customize & /usr/local/bin/docker-entrypoint.sh "$@"
 
+/bin/bash -c "tail -f /dev/null"
