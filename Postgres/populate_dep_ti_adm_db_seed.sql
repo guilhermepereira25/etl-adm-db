@@ -49,11 +49,11 @@ VALUES
 
 
 -- Populando tabela funcionario
-INSERT INTO funcionario (nome, id_funcao, id_nivel, id_cargo, created_at)
+INSERT INTO funcionario (nome, funcao_id , nivel_id, cargo_id, created_at)
 VALUES 
   ('João Silva', (SELECT id FROM funcao WHERE descricao = 'Analista de Suporte'), (SELECT id FROM nivel WHERE descricao = 'Junior'), (SELECT id FROM cargo WHERE descricao = 'Técnico de Suporte'), NOW()),
   ('Maria Souza', (SELECT id FROM funcao WHERE descricao = 'Desenvolvedor'), (SELECT id FROM nivel WHERE descricao = 'Pleno'), (SELECT id FROM cargo WHERE descricao = 'Engenheiro de Software'), NOW()),
-  ('José Santos', (SELECT id FROM funcao WHERE descricao = 'Gerente de Projetos'), (SELECT id FROM nivel WHERE descricao = 'Senior'), (SELECT id FROM cargo WHERE descricao = 'Diretor de Tecnologia'), NOW());
+  ('José Santos', (SELECT id FROM funcao WHERE descricao = 'Gerente de Projetos'), (SELECT id FROM nivel WHERE descricao = 'Senior'), (SELECT id FROM cargo WHERE descricao = 'Diretor de Tecnologia'), NOW()),
   ('Ana Oliveira', (SELECT id FROM funcao WHERE descricao = 'Analista de Sistemas'), (SELECT id FROM nivel WHERE descricao = 'Junior'), (SELECT id FROM cargo WHERE descricao = 'Técnico de Suporte'), NOW()),
   ('Pedro Rocha', (SELECT id FROM funcao WHERE descricao = 'DBA'), (SELECT id FROM nivel WHERE descricao = 'Pleno'), (SELECT id FROM cargo WHERE descricao = 'Engenheiro de Software'), NOW()),
   ('Mariana Costa', (SELECT id FROM funcao WHERE descricao = 'Analista de Suporte'), (SELECT id FROM nivel WHERE descricao = 'Senior'), (SELECT id FROM cargo WHERE descricao = 'Diretor de Tecnologia'), NOW());
@@ -126,10 +126,10 @@ VALUES
   ('Curso de Python Avançado', '2024-07-10 13:30:00', NOW());
 
 -- Populando tabela treinamento_funcionario
-INSERT INTO treinamento_funcionario (treinamento_id, funcionario_id)
+INSERT INTO treinamento_funcionario (treinamento_id, funcionario_id, nota_final)
 VALUES 
-  ((SELECT id FROM treinamento_ti LIMIT 1), (SELECT id FROM funcionario LIMIT 1)),
-  ((SELECT id FROM treinamento_ti LIMIT 1 OFFSET 1), (SELECT id FROM funcionario LIMIT 1 OFFSET 1));
+  ((SELECT id FROM treinamento_ti LIMIT 1), (SELECT id FROM funcionario LIMIT 1), 7.0),
+  ((SELECT id FROM treinamento_ti LIMIT 1 OFFSET 1), (SELECT id FROM funcionario LIMIT 1 OFFSET 1), 5.0);
 
 -- Populando tabela equipe_area
 INSERT INTO equipe_area (equipe_id, area_id)
