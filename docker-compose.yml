@@ -14,8 +14,8 @@ services:
       PGDATA: "/var/lib/postgresql/data/pgdata"
       PGPORT: "5432"
     ports:
-    - "6432:5432"
-    - "122:22"
+      - "6432:5432"
+      - "122:22"
     volumes:
       - type: bind
         source: ./data/postgresql/pgdata
@@ -47,16 +47,105 @@ services:
     networks:
       - spectre-network-test
 
+  temboard-repository:
+    hostname: temboard-repository
+    container_name: temboard-repository
+    image: postgres:14
+    profiles:
+      - with-temboard
+    ports:
+      - "6433:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      PGPORT: "5432"
+    volumes:
+      - type: bind
+        source: ./Temboard/server/data/temboard-repository/postgresql/pgdata
+        target: /var/lib/postgresql/data
+    command: [
+        "postgres",
+        "-c", "log_connections=on",
+        "-c", "log_statement=all",
+        "-c", "log_line_prefix=%m [%p]: [%l-1] app=%a,db=%d,client=%h,user=%u"
+      ]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100k"
+        max-file: "5"
+    networks:
+      - temboard-network
+
+  temboard-ui:
+    hostname: temboard-ui
+    container_name: temboard-ui
+    image: temboard-server:latest
+    profiles:
+      - with-temboard
+    build:
+      context: ./Temboard/server
+      dockerfile: Dockerfile
+      target: temboard-server
+    ports:
+      - "8888:8888"
+    depends_on:
+      #temboard-agent
+      - temboard-repository
+    volumes:
+      - type: bind
+        source: ./Temboard/server/data/temboard-server/temboard
+        target: /etc/temboard
+      - type: bind
+        source: ./Temboard/server/data/temboard-server/log
+        target: /var/log/temboard
+    networks:
+      - temboard-network
+
+  temboard-agent:
+    hostname: temboard-agent
+    container_name: temboard-agent
+    image: temboard-agent:latest
+    profiles:
+      - with-temboard
+    build:
+      context: ./Temboard/agent
+      dockerfile: Dockerfile
+      target: temboard-agent
+    environment:
+      TEMBOARD_HOSTNAME: temboard-ui
+      TEMBOARD_UI_URL: http://temboard-ui:8888
+      TEMBOARD_UI_USER: admin
+      TEMBOARD_UI_PASSWORD: admin
+      TEMBOARD_LOGGING_LEVEL: DEBUG
+      PGPASSWORD: postgres
+    depends_on:
+      - temboard-ui
+      - postgres-source-db
+    volumes:
+      - type: bind
+        source: ./Temboard/server/data/temboard-agent/temboard
+        target: /etc/temboard
+      - type: bind
+        source: ./Temboard/server/data/temboard-agent/log
+        target: /var/log/temboard
+    networks:
+      - temboard-network
+      - spectre-network-test
+
   pg-barman:
     hostname: pg-barman
     container_name: pg-barman
     image: pg-barman:latest
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
       target: pg-barman
     ports:
-    - "222:22"
+      - "222:22"
+    depends_on:
+      - postgres-source-db
     volumes:
       - type: bind
         source: ./data/pgbarman/backupcfg
@@ -79,7 +168,6 @@ services:
       - spectre-network-test
     restart: always
 
-
 networks:
   spectre-network-test:
     name: spectre-network-test
@@ -87,4 +175,8 @@ networks:
     ipam:
       driver: default
       config:
-      - subnet: 174.19.239.0/24
+        - subnet: 174.19.239.0/24
+
+  temboard-network:
+    name: temboard-network
+    driver: bridge
