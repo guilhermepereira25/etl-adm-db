@@ -1,9 +1,9 @@
 FROM python:3.11.9-slim-bullseye AS temboard-server
 
 ENV PGHOST=temboard-repository
-ENV PGPORT=6433
-ENV PGUSER=postgres
-ENV PGPASS=postgres
+ENV PGPORT=5432
+ENV PGUSER=temboard
+ENV PGPASSWORD=temboard
 
 RUN apt-get update && apt-get install -y lsb-release curl openssl && apt-get clean all;
 
