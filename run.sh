@@ -32,6 +32,10 @@ function up(){
     docker compose --compatibility --project-name "postgresql-barman" up -d;
 }
 
+function up_with_temboard() {
+    docker compose --compatibility --project-name "postgresql-temboard-barman" --profile with-temboard up -d;
+}
+
 function stop(){
     docker compose --compatibility --project-name "postgresql-barman" stop;
 }
