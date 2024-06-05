@@ -39,6 +39,12 @@ services:
       - "max_wal_senders=2"
       - "-c"
       - "max_replication_slots=2"
+      - "-c"
+      - "log_connections=on"
+      - "-c"
+      - "log_statement=all"
+      - "-c"
+      - "cluster_name=postgres-source-db"
     logging:
       driver: "json-file"
       options:
@@ -93,7 +99,7 @@ services:
     ports:
       - "8888:8888"
     depends_on:
-      #temboard-agent
+      - temboard-agent
       - temboard-repository
     volumes:
       - type: bind
@@ -111,26 +117,31 @@ services:
     image: temboard-agent:latest
     profiles:
       - with-temboard
+    ports:
+      - "2345:2345"
     build:
       context: ./Temboard/agent
       dockerfile: Dockerfile
       target: temboard-agent
     environment:
-      TEMBOARD_HOSTNAME: temboard-ui
-      TEMBOARD_UI_URL: http://temboard-ui:8888
+      TEMBOARD_UI_URL: http://temboard-ui:8888/
       TEMBOARD_UI_USER: admin
       TEMBOARD_UI_PASSWORD: admin
+      TEMBOARD_HOSTNAME: temboard-agent
+      TEMBOARD_REGISTER_PORT: 2345
       TEMBOARD_LOGGING_LEVEL: DEBUG
-      PGPASSWORD: postgres
-    depends_on:
-      - temboard-ui
-      - postgres-source-db
+      PGHOST: postgres-source-db
+      PGPORT: 5432
+      PGDATABASE: db
+      PGUSER: dbadmin
+      PGPASSWORD: senha
+    command: [sleep, "infinity"]
     volumes:
       - type: bind
-        source: ./Temboard/server/data/temboard-agent/temboard
+        source: ./Temboard/agent/data/temboard-agent/temboard
         target: /etc/temboard
       - type: bind
-        source: ./Temboard/server/data/temboard-agent/log
+        source: ./Temboard/agent/data/temboard-agent/log
         target: /var/log/temboard
     networks:
       - temboard-network
