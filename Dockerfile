@@ -1,11 +1,27 @@
 # Dockerfile
 
 # Postgres
-FROM postgres:14 AS postgres-source-db
-ENV POSTGRES_USER dbadmin	 
+FROM postgres:14-bullseye AS postgres-source-db
+
+ARG TEMBOARD_AGENT_VERSION
+
+WORKDIR /var/lib/postgresql/data
+
+ENV POSTGRES_USER dbadmin
 ENV POSTGRES_DB db
 ENV POSTGRES_PASSWORD senha
 
+## temboard setup
+ENV TEMBOARD_AGENT_VERSION ${TEMBOARD_AGENT_VERSION}
+ENV TEMBOARD_AGENT_PORT 2345
+ENV TEMBOARD_UI_URL http://temboardui:8888
+ENV TEMBOARD_UI_USER admin
+ENV TEMBOARD_UI_PASSWORD admin
+ENV TEMBOARD_LOGGING_LEVEL INFO
+ENV PGHOST /var/run/postgresql
+ENV PGDATABASE ${POSTGRES_DB}
+ENV PGUSER ${POSTGRES_USER}
+ENV TEMBOARD_HOSTNAME "producao.postgressourcedb"
 
 # SSH Setup
 RUN apt-get update && apt-get install -y openssh-server rsync && rm -rf /var/lib/apt/lists/*
@@ -25,6 +41,27 @@ RUN echo "export POSTGRES_PASSWORD=senha" >> /etc/profile
 RUN mkdir -p ~/.ssh && chmod 700 ~/.ssh && touch ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
 RUN su - postgres -c "mkdir -p ~postgres/.ssh && chmod 700 ~postgres/.ssh && touch ~postgres/.ssh/authorized_keys && chmod 600 ~postgres/.ssh/authorized_keys"
 
+## temboard setup
+RUN apt-get update -y && \
+    apt-get install -y \
+	sudo build-essential \
+    libncursesw5-dev \
+    libxml2-dev \
+    libgdal-dev \
+    libproj-dev \
+    libjson-c-dev \
+    xsltproc \
+    docbook-xsl \
+    docbook-mathml \
+    libpq-dev \
+    protobuf-c-compiler \
+    libjsoncpp-dev \
+    libprotobuf-dev \
+    libprotobuf-c-dev \
+    proj-bin \
+    python3-pip python3-setuptools python3-dev; \
+	whereis python3 && ln -s /usr/bin/python3 /usr/bin/python && \
+	pip install logutils argparse psycopg2 temboard-agent==${TEMBOARD_AGENT_VERSION};
 
 # Custom config
 RUN mkdir -p /var/lib/postgresql/config/
@@ -37,6 +74,7 @@ COPY ./Postgres/db-config.sh /docker-entrypoint-initdb.d/
 COPY ./Postgres/custom-docker-entrypoint.sh /
 RUN chmod +x /custom-docker-entrypoint.sh
 
+EXPOSE 2345
 EXPOSE 22
 
 ENTRYPOINT ["/custom-docker-entrypoint.sh"]
