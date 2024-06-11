@@ -1,6 +1,18 @@
 #!/bin/bash
 set -e
 
+run_temboard_agent() {
+	if [ ! -f "/var/lib/postgresql/data/configured" ]; then
+		/usr/local/share/temboard-agent/purge.sh data/pgdata;
+		/usr/local/share/temboard-agent/auto_configure.sh {$TEMBOARD_UI_URL};
+		sudo -u ${POSTGRES_USER} temboard-agent -c /etc/temboard-agent/data/pgdata/temboard-agent.conf fetch-key --force;
+	else
+		echo "Temboard agent Configured"
+	fi;
+
+    sudo -u ${POSTGRES_USER} temboard-agent -c /etc/temboard-agent/data/pgdata/temboard-agent.conf;
+}
+
 function customize {
 #	id
 	cp -R /tmp/.ssh/* /root/.ssh/
@@ -14,6 +26,8 @@ function customize {
 	su - postgres -c "cp -R /tmp/.ssh/* ~postgres/.ssh/ && chmod 700 ~postgres/.ssh && chmod 644 ~postgres/.ssh/id_rsa.pub && chmod 600 ~postgres/.ssh/id_rsa && chmod 600 ~postgres/.ssh/authorized_keys"
 
 	/usr/sbin/sshd 2>&1
+
+	sleep 30 & run_temboard_agent
 }
 
 customize & /usr/local/bin/docker-entrypoint.sh "$@"
