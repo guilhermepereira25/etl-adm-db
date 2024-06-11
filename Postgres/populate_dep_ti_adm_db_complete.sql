@@ -1,5 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 create type severidade_enum as enum ('Baixa', 'Média', 'Alta');
 
 alter type severidade_enum owner to dbadmin;
@@ -12,7 +10,7 @@ create type tipo_enum as enum ('software', 'servidor', 'computador');
 
 alter type tipo_enum owner to dbadmin;
 
-create table if not exists area
+create table area
 (
     id        uuid    default gen_random_uuid() not null
         primary key,
@@ -25,7 +23,7 @@ create table if not exists area
 alter table area
     owner to dbadmin;
 
-create table if not exists situacao
+create table situacao
 (
     id         uuid    default gen_random_uuid() not null
         primary key,
@@ -37,7 +35,7 @@ create table if not exists situacao
 alter table situacao
     owner to dbadmin;
 
-create table if not exists cargo
+create table cargo
 (
     id        uuid    default gen_random_uuid() not null
         primary key,
@@ -50,7 +48,7 @@ create table if not exists cargo
 alter table cargo
     owner to dbadmin;
 
-create table if not exists equipe
+create table equipe
 (
     id         uuid    default gen_random_uuid() not null
         primary key,
@@ -64,7 +62,7 @@ create table if not exists equipe
 alter table equipe
     owner to dbadmin;
 
-create table if not exists equipe_area
+create table equipe_area
 (
     id        uuid    default gen_random_uuid() not null
         primary key,
@@ -78,7 +76,7 @@ create table if not exists equipe_area
 alter table equipe_area
     owner to dbadmin;
 
-create table if not exists estoque_ativo_ti
+create table estoque_ativo_ti
 (
     tipo       tipo_enum,
     quantidade integer,
@@ -88,7 +86,7 @@ create table if not exists estoque_ativo_ti
 alter table estoque_ativo_ti
     owner to dbadmin;
 
-create table if not exists funcao
+create table funcao
 (
     id         uuid    default gen_random_uuid() not null
         primary key,
@@ -103,7 +101,7 @@ create table if not exists funcao
 alter table funcao
     owner to dbadmin;
 
-create table if not exists nivel
+create table nivel
 (
     id        uuid    default gen_random_uuid() not null
         primary key,
@@ -116,7 +114,7 @@ create table if not exists nivel
 alter table nivel
     owner to dbadmin;
 
-create table if not exists funcionario
+create table funcionario
 (
     id         uuid    default gen_random_uuid() not null
         primary key,
@@ -137,7 +135,7 @@ create table if not exists funcionario
 alter table funcionario
     owner to dbadmin;
 
-create table if not exists ativo_ti
+create table ativo_ti
 (
     id                 uuid    default gen_random_uuid() not null
         primary key,
@@ -157,7 +155,7 @@ create table if not exists ativo_ti
 alter table ativo_ti
     owner to dbadmin;
 
-create table if not exists equipe_funcionario
+create table equipe_funcionario
 (
     id             uuid    default gen_random_uuid() not null
         primary key,
@@ -173,7 +171,7 @@ create table if not exists equipe_funcionario
 alter table equipe_funcionario
     owner to dbadmin;
 
-create table if not exists incidente
+create table incidente
 (
     id             uuid    default gen_random_uuid() not null
         primary key,
@@ -191,7 +189,7 @@ create table if not exists incidente
 alter table incidente
     owner to dbadmin;
 
-create table if not exists log_chamado
+create table log_chamado
 (
     id              uuid    default gen_random_uuid() not null
         primary key,
@@ -208,7 +206,7 @@ create table if not exists log_chamado
 alter table log_chamado
     owner to dbadmin;
 
-create table if not exists projeto
+create table projeto
 (
     id              uuid    default gen_random_uuid() not null
         primary key,
@@ -227,7 +225,7 @@ create table if not exists projeto
 alter table projeto
     owner to dbadmin;
 
-create table if not exists equipe_projeto
+create table equipe_projeto
 (
     id         uuid    default gen_random_uuid() not null
         primary key,
@@ -243,7 +241,7 @@ create table if not exists equipe_projeto
 alter table equipe_projeto
     owner to dbadmin;
 
-create table if not exists tipo_chamado
+create table tipo_chamado
 (
     id        uuid    default gen_random_uuid() not null
         primary key,
@@ -256,7 +254,7 @@ create table if not exists tipo_chamado
 alter table tipo_chamado
     owner to dbadmin;
 
-create table if not exists chamado
+create table chamado
 (
     id              uuid    default gen_random_uuid() not null
         primary key,
@@ -273,7 +271,7 @@ create table if not exists chamado
 alter table chamado
     owner to dbadmin;
 
-create table if not exists rel_chamado_log_chamado
+create table rel_chamado_log_chamado
 (
     id             uuid    default gen_random_uuid() not null
         primary key,
@@ -287,7 +285,7 @@ create table if not exists rel_chamado_log_chamado
 alter table rel_chamado_log_chamado
     owner to dbadmin;
 
-create table if not exists treinamento_ti
+create table treinamento_ti
 (
     id          uuid    default gen_random_uuid() not null
         primary key,
@@ -302,7 +300,7 @@ create table if not exists treinamento_ti
 alter table treinamento_ti
     owner to dbadmin;
 
-create table if not exists treinamento_funcionario
+create table treinamento_funcionario
 (
     id             uuid    default gen_random_uuid() not null
         primary key,
@@ -319,7 +317,7 @@ create table if not exists treinamento_funcionario
 alter table treinamento_funcionario
     owner to dbadmin;
 
-create table if not exists sistema
+create table sistema
 (
     id      uuid         not null
         primary key,
@@ -332,7 +330,7 @@ create table if not exists sistema
 alter table sistema
     owner to dbadmin;
 
-create table if not exists perfil
+create table perfil
 (
     id      uuid         not null
         primary key,
@@ -345,7 +343,7 @@ create table if not exists perfil
 alter table perfil
     owner to dbadmin;
 
-create table if not exists permissao
+create table permissao
 (
     id      uuid         not null
         primary key,
@@ -358,7 +356,7 @@ create table if not exists permissao
 alter table permissao
     owner to dbadmin;
 
-create table if not exists funcionario_sistema
+create table funcionario_sistema
 (
     id             uuid not null
         primary key,
@@ -374,7 +372,7 @@ create table if not exists funcionario_sistema
 alter table funcionario_sistema
     owner to dbadmin;
 
-create table if not exists perfil_permissao
+create table perfil_permissao
 (
     id           uuid not null
         primary key,
@@ -418,142 +416,7 @@ FROM funcionario
 alter table view_funcionarios_de_cargo_engenheiro_de_software
     owner to dbadmin;
 
-create or replace function uuid_nil() returns uuid
-    immutable
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
 
-alter function uuid_nil() owner to dbadmin;
-
-create or replace function uuid_ns_dns() returns uuid
-    immutable
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
-
-alter function uuid_ns_dns() owner to dbadmin;
-
-create or replace function uuid_ns_url() returns uuid
-    immutable
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
-
-alter function uuid_ns_url() owner to dbadmin;
-
-create or replace function uuid_ns_oid() returns uuid
-    immutable
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
-
-alter function uuid_ns_oid() owner to dbadmin;
-
-create or replace function uuid_ns_x500() returns uuid
-    immutable
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
-
-alter function uuid_ns_x500() owner to dbadmin;
-
-create or replace function uuid_generate_v1() returns uuid
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
-
-alter function uuid_generate_v1() owner to dbadmin;
-
-create or replace function uuid_generate_v1mc() returns uuid
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
-
-alter function uuid_generate_v1mc() owner to dbadmin;
-
-create or replace function uuid_generate_v3(namespace uuid, name text) returns uuid
-    immutable
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
-
-alter function uuid_generate_v3(uuid, text) owner to dbadmin;
-
-create or replace function uuid_generate_v4() returns uuid
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
-
-alter function uuid_generate_v4() owner to dbadmin;
-
-create or replace function uuid_generate_v5(namespace uuid, name text) returns uuid
-    immutable
-    strict
-    parallel safe
-    language c
-as
-$$
-begin
--- missing source code
-end;
-$$;
-
-alter function uuid_generate_v5(uuid, text) owner to dbadmin;
 
 create or replace function atualizar_estoque_ativos() returns trigger
     language plpgsql
@@ -607,6 +470,7 @@ $$;
 
 alter function calcular_tempo_resolucao_chamado(uuid) owner to dbadmin;
 
+
 create or replace function relatorio_treinamentos_por_funcionario(id_funcionario uuid)
     returns TABLE(nome_funcionario character varying, descricao_treinamento character varying, data_hora_treinamento timestamp without time zone)
     language plpgsql
@@ -631,6 +495,7 @@ $$;
 
 alter function relatorio_treinamentos_por_funcionario(uuid) owner to dbadmin;
 
+
 create or replace procedure sync_estoque_ativo_ti()
     language plpgsql
 as
@@ -654,42 +519,50 @@ $$;
 
 alter procedure sync_estoque_ativo_ti() owner to dbadmin;
 
+
 create or replace function aprovar_funcionario_treinamento() returns trigger
     language plpgsql
 as
 $$
+BEGIN
 
-DECLARE
+    IF TG_OP = 'INSERT' THEN
 
-	aprovacao bool;
-	nota_funcionario float;
-	data_aprovacao timestamp;
-begin
-	SELECT
-		treinamento_funcionario.nota_final, CURRENT_TIMESTAMP INTO nota_funcionario, data_aprovacao
-	from treinamento_funcionario
-	where treinamento_funcionario.treinamento_id = new.treinamento_id AND treinamento_funcionario.funcionario_id = NEW.funcionario_id;
+        IF new.nota_final IS NULL THEN
+            UPDATE treinamento_funcionario
+                SET aprovado = NULL
+            WHERE treinamento_funcionario.treinamento_id = new.treinamento_id AND treinamento_funcionario.funcionario_id = NEW.funcionario_id;
+        ELSIF new.nota_final >= 7.0 THEN
+            UPDATE treinamento_funcionario
+                SET aprovado = TRUE , data_conclusao = CURRENT_TIMESTAMP
+            WHERE treinamento_funcionario.treinamento_id = new.treinamento_id AND treinamento_funcionario.funcionario_id = NEW.funcionario_id;
+        ELSE
+            UPDATE treinamento_funcionario
+                SET aprovado = FALSE
+            WHERE treinamento_funcionario.treinamento_id = new.treinamento_id AND treinamento_funcionario.funcionario_id = NEW.funcionario_id;    
+        END IF;
 
-	IF nota_funcionario IS NULL THEN
-		UPDATE treinamento_funcionario
-			SET aprovado = NULL
-		where treinamento_funcionario.treinamento_id = new.treinamento_id AND treinamento_funcionario.funcionario_id = NEW.funcionario_id;
+    ELSIF TG_OP = 'UPDATE' THEN
 
-	ELSIF nota_funcionario >= 7 THEN
-		UPDATE treinamento_funcionario
-			SET aprovado = TRUE, data_conclusão = data_aprovacao
-		where treinamento_funcionario.treinamento_id = new.treinamento_id AND treinamento_funcionario.funcionario_id = NEW.funcionario_id;
+        IF OLD.aprovado IS DISTINCT FROM NEW.aprovado THEN
 
-	ELSE
-		UPDATE treinamento_funcionario
-			SET aprovado = FALSE
-		where treinamento_funcionario.treinamento_id = new.treinamento_id AND treinamento_funcionario.funcionario_id = NEW.funcionario_id;
+            IF new.nota_final >= 7.0 THEN
+                UPDATE treinamento_funcionario
+                    SET aprovado = TRUE , data_conclusao = CURRENT_TIMESTAMP
+                WHERE treinamento_funcionario.treinamento_id = new.treinamento_id AND treinamento_funcionario.funcionario_id = NEW.funcionario_id;
+            ELSE
+                UPDATE treinamento_funcionario
+                    SET aprovado = FALSE
+                WHERE treinamento_funcionario.treinamento_id = new.treinamento_id AND treinamento_funcionario.funcionario_id = NEW.funcionario_id;   
+            END IF;
 
-	END IF;
+        END IF;
+        
+    END IF;
 
-	RETURN NEW;
+    RETURN NEW;
+END;
 
-end;
 $$;
 
 alter function aprovar_funcionario_treinamento() owner to dbadmin;
@@ -698,7 +571,9 @@ create trigger atualizar_aprovacao_funcionario_treinamento
     after insert or update
     on treinamento_funcionario
     for each row
-execute procedure aprovar_funcionario_treinamento();
+execute function aprovar_funcionario_treinamento();
+
+
 
 create or replace function funcionario_deletado_remover_equipes() returns trigger
     language plpgsql

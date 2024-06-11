@@ -51,7 +51,7 @@ function drop_hard(){
 }
 
 function populate(){
-    docker exec postgres-source-db psql -U dbadmin -d 'db' -p 5432 -c "$(cat ./Postgres/populate_dep_ti_adm_db.sql)";
+    docker exec postgres-source-db psql -U dbadmin -d 'db' -p 5432 -c "$(cat ./Postgres/populate_dep_ti_adm_db_complete.sql)";
 }
 
 function seed(){

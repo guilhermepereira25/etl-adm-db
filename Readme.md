@@ -67,6 +67,10 @@ Para popular o banco de dados.
 ```bash
 bash run.sh populate;
 ```
+Para inserir os registros no banco de dados.
+```bash
+bash run.sh seed;
+```
 
 ---
 
