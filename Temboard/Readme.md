@@ -9,7 +9,7 @@
 Para iniciar o projeto, basta rodar o comando:
 
 ```bash
-docker compose up --profile with-temboard --build -d;
+docker compose --profile with-temboard up --build -d;
 ```
 
 Ou rodar o script
