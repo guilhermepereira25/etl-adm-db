@@ -3,9 +3,10 @@ set -e
 
 run_temboard_agent() {
 	if [ ! -f "/var/lib/postgresql/data/configured" ]; then
-		/usr/local/share/temboard-agent/purge.sh data/pgdata;
+		/usr/local/share/temboard-agent/purge.sh {$PGDATA};
 		/usr/local/share/temboard-agent/auto_configure.sh {$TEMBOARD_UI_URL};
 		sudo -u ${POSTGRES_USER} temboard-agent -c /etc/temboard-agent/data/pgdata/temboard-agent.conf fetch-key --force;
+		touch /var/lib/postgresql/data/configured;
 	else
 		echo "Temboard agent Configured"
 	fi;
