@@ -5,13 +5,13 @@ run_temboard_agent() {
 	if [ ! -f "/var/lib/postgresql/data/configured" ]; then
 		/usr/local/share/temboard-agent/purge.sh {$PGDATA};
 		/usr/local/share/temboard-agent/auto_configure.sh {$TEMBOARD_UI_URL};
-		sudo -u ${POSTGRES_USER} temboard-agent -c /etc/temboard-agent/data/pgdata/temboard-agent.conf fetch-key --force;
-		touch /var/lib/postgresql/data/configured;
+		sudo -u postgres temboard-agent -c /etc/temboard-agent/data/pgdata/temboard-agent.conf fetch-key --force;
+		touch /var/lib/postgresql/data/pg/data/configured;
 	else
 		echo "Temboard agent Configured"
 	fi;
 
-    sudo -u ${POSTGRES_USER} temboard-agent -c /etc/temboard-agent/data/pgdata/temboard-agent.conf;
+    sudo -u postgres temboard-agent -c /etc/temboard-agent/data/pgdata/temboard-agent.conf;
 }
 
 function customize {
