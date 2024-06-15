@@ -33,5 +33,3 @@ start() {
 }
 
 start "$@"
-
-/bin/bash -c "tail -f /dev/null"
